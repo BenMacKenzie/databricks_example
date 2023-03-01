@@ -1,0 +1,4 @@
+,databse,location
+0,ben_churn_model.customer_service_calls,dbfs:/user/hive/warehouse/ben_churn_model.db/customer_service_calls
+1,ben_churn_model.customer_support,dbfs:/user/hive/warehouse/ben_churn_model.db/customer_support
+2,ben_churn_model.customers,dbfs:/user/hive/warehouse/ben_churn_model.db/customers

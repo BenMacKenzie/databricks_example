@@ -30,7 +30,7 @@ for db in spark.sql(f"show databases like {database_prefix}").collect():
   if tbls_df is None:
     tbls_df = _df
   else:
-    tbls_df = tbls_df.union(df)
+    tbls_df = tbls_df.union(_df)
   
 tables = tbls_df.collect()
 for row in tables:
@@ -47,4 +47,28 @@ target_tables
 
 # COMMAND ----------
 
+# MAGIC %sql 
+# MAGIC show databases like '*'
 
+# COMMAND ----------
+
+# MAGIC %sql
+# MAGIC describe table extended ben_churn_model.dbu
+
+# COMMAND ----------
+
+target_tables
+
+# COMMAND ----------
+
+import pandas as pd
+df = pd.DataFrame(target_tables, columns =['databse', 'location'])
+df.to_csv('test.csv')
+
+# COMMAND ----------
+
+df
+
+# COMMAND ----------
+
+df.toS
