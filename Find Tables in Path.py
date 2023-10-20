@@ -1,6 +1,7 @@
 # Databricks notebook source
 # MAGIC %md 
 # MAGIC One Database at a time using Regex
+# MAGIC
 
 # COMMAND ----------
 
@@ -19,8 +20,9 @@ display(df)
 
 # COMMAND ----------
 
-database_prefix = "\'ben_churn*\'"  #note the * and \`
-file_prefix = "dbfs:/user/hive/warehouse/ben_churn_model.db/cust"
+database_prefix = "\'*\'"  #note the * and \`
+#file_prefix = "dbfs:/user/hive/warehouse/ben_churn_model.db/cust"
+file_prefix = "abfss://deltalake@oneenvadls.dfs.core.windows.net/demofieldeng/external_location/ben_churn_model/"
 tbls_df = None
 target_tables = []
 for db in spark.sql(f"show databases like {database_prefix}").collect():
@@ -43,6 +45,10 @@ for row in tables:
     target_tables.append((f"{databaseName}.{tableName}", table[0]['data_type']))
 
 target_tables
+
+
+# COMMAND ----------
+
 
 
 # COMMAND ----------

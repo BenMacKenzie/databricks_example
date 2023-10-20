@@ -1,7 +1,7 @@
 # Databricks notebook source
 # MAGIC %md
 # MAGIC First add keys to databricks secrets with key vault backing.  see https://learn.microsoft.com/en-us/azure/databricks/security/secrets/secret-scopes
-# MAGIC 
+# MAGIC
 # MAGIC In this example I haved added to keys 'class1' and 'class2'
 
 # COMMAND ----------
@@ -48,6 +48,11 @@
 # COMMAND ----------
 
 # MAGIC %sql
+# MAGIC describe crypto_test.customers
+
+# COMMAND ----------
+
+# MAGIC %sql
 # MAGIC create view crypo_test_secure_customer_view as 
 # MAGIC select Name, base64(aes_encrypt(Address, secret('encrypt', 'class1'))) as address_aes_1, base64(aes_encrypt(ssn, secret('encrypt', 'class2'))) as ssn_aes_2 from crypto_test.customers
 
@@ -63,4 +68,9 @@
 
 # COMMAND ----------
 
+k = dbutils.secrets.get('encrypt', 'class1')
 
+# COMMAND ----------
+
+# MAGIC %sql
+# MAGIC select base64(aes_encrypt('Spark', secret('encrypt', 'class1')))
