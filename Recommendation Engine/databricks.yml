@@ -1,0 +1,37 @@
+bundle:
+  name: recommendation_engine
+
+workspace:
+  host: https://<your workspace here>
+  profile: fe-vm-serverless-stable-1dpktm
+  root_path: /Workspace/Users/ben.mackenzie@databricks.com/.bundle/${bundle.name}/${bundle.target}
+
+targets:
+  dev:
+    default: true
+
+resources:
+  jobs:
+    recommendation_engine_setup:
+      name: "Recommendation Engine - Setup"
+      tasks:
+        - task_key: setup_courses
+          notebook_task:
+            notebook_path: src/01_setup_course_data.py
+        - task_key: setup_customers
+          notebook_task:
+            notebook_path: src/02_setup_customer_data.py
+          depends_on:
+            - task_key: setup_courses
+
+    recommendation_engine_run:
+      name: "Recommendation Engine - Generate"
+      tasks:
+        - task_key: batch_enrichment
+          notebook_task:
+            notebook_path: src/03_batch_enrichment.py
+        - task_key: generate_recommendations
+          notebook_task:
+            notebook_path: src/04_generate_recommendations.py
+          depends_on:
+            - task_key: batch_enrichment
